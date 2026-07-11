@@ -3,14 +3,18 @@
     "step": {
       "user": {
         "title": "Bin Alternation",
-        "description": "Configure the alternating bin sensor (every other week, based on ISO week number parity).",
+        "description": "Configure the alternating bin sensor (every other week, ISO week parity). Default schedule: put the bin out Wednesday evening, collection Thursday morning.",
         "data": {
           "name": "Sensor name",
           "label_paire": "Even-week label (e.g. Yellow)",
-          "label_impaire": "Odd-week label (e.g. Grey)",
+          "label_impaire": "Odd-week label (e.g. Black)",
           "icon_paire": "Even-week icon (e.g. mdi:recycle)",
           "icon_impaire": "Odd-week icon (e.g. mdi:trash-can)",
-          "jaune_sur_paire": "The yellow bin falls on even weeks"
+          "jaune_sur_paire": "The yellow bin falls on even weeks",
+          "jour_collecte": "Collection day",
+          "jour_sortie": "Day to put the bin out",
+          "heure_sortie": "Hour from which to put the bin out (0-23)",
+          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])"
         }
       }
     }
@@ -19,14 +23,18 @@
     "step": {
       "init": {
         "title": "Edit Bin Alternation",
-        "description": "Edit the sensor settings.",
+        "description": "Edit the settings, collection schedule and special days.",
         "data": {
           "name": "Sensor name",
           "label_paire": "Even-week label (e.g. Yellow)",
-          "label_impaire": "Odd-week label (e.g. Grey)",
+          "label_impaire": "Odd-week label (e.g. Black)",
           "icon_paire": "Even-week icon (e.g. mdi:recycle)",
           "icon_impaire": "Odd-week icon (e.g. mdi:trash-can)",
-          "jaune_sur_paire": "The yellow bin falls on even weeks"
+          "jaune_sur_paire": "The yellow bin falls on even weeks",
+          "jour_collecte": "Collection day",
+          "jour_sortie": "Day to put the bin out",
+          "heure_sortie": "Hour from which to put the bin out (0-23)",
+          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])"
         }
       }
     }

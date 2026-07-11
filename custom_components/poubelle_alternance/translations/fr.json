@@ -3,14 +3,18 @@
     "step": {
       "user": {
         "title": "Poubelle Alternance",
-        "description": "Configure le capteur d'alternance des poubelles (une semaine sur deux, basé sur la parité du numéro de semaine ISO).",
+        "description": "Configure le capteur d'alternance des poubelles (une semaine sur deux, parité du numéro de semaine ISO). Rythme par défaut : sortie le mercredi soir, ramassage le jeudi matin.",
         "data": {
           "name": "Nom du capteur",
           "label_paire": "Libellé semaine paire (ex : Jaune)",
-          "label_impaire": "Libellé semaine impaire (ex : Grise)",
+          "label_impaire": "Libellé semaine impaire (ex : Noire)",
           "icon_paire": "Icône semaine paire (ex : mdi:recycle)",
           "icon_impaire": "Icône semaine impaire (ex : mdi:trash-can)",
-          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires"
+          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires",
+          "jour_collecte": "Jour de ramassage",
+          "jour_sortie": "Jour de sortie du bac",
+          "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
+          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])"
         }
       }
     }
@@ -19,14 +23,18 @@
     "step": {
       "init": {
         "title": "Modifier Poubelle Alternance",
-        "description": "Modifie les paramètres du capteur.",
+        "description": "Modifie les paramètres, le rythme de collecte et les jours spéciaux.",
         "data": {
           "name": "Nom du capteur",
           "label_paire": "Libellé semaine paire (ex : Jaune)",
-          "label_impaire": "Libellé semaine impaire (ex : Grise)",
+          "label_impaire": "Libellé semaine impaire (ex : Noire)",
           "icon_paire": "Icône semaine paire (ex : mdi:recycle)",
           "icon_impaire": "Icône semaine impaire (ex : mdi:trash-can)",
-          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires"
+          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires",
+          "jour_collecte": "Jour de ramassage",
+          "jour_sortie": "Jour de sortie du bac",
+          "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
+          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])"
         }
       }
     }

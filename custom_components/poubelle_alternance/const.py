@@ -9,11 +9,30 @@ CONF_LABEL_IMPAIRE = "label_impaire"
 CONF_ICON_PAIRE = "icon_paire"
 CONF_ICON_IMPAIRE = "icon_impaire"
 CONF_JAUNE_SUR_PAIRE = "jaune_sur_paire"
+CONF_JOUR_SORTIE = "jour_sortie"
+CONF_JOUR_COLLECTE = "jour_collecte"
+CONF_HEURE_SORTIE = "heure_sortie"
+CONF_EXCEPTIONS = "exceptions"
 
 # Valeurs par défaut
 DEFAULT_NAME = "Poubelle de la semaine"
 DEFAULT_LABEL_PAIRE = "Jaune"
-DEFAULT_LABEL_IMPAIRE = "Grise"
+DEFAULT_LABEL_IMPAIRE = "Noire"
 DEFAULT_ICON_PAIRE = "mdi:recycle"
 DEFAULT_ICON_IMPAIRE = "mdi:trash-can"
 DEFAULT_JAUNE_SUR_PAIRE = True
+
+# Rythme de collecte : sortie le mercredi soir, ramassage le jeudi matin.
+# Indices ISO : lundi=1 … dimanche=7
+DEFAULT_JOUR_SORTIE = 3       # mercredi (soir où l'on sort le bac)
+DEFAULT_JOUR_COLLECTE = 4     # jeudi (matin du ramassage)
+DEFAULT_HEURE_SORTIE = 18     # heure à partir de laquelle on considère "à sortir ce soir"
+
+# --- Exceptions (jours spéciaux définis à la main) ---
+# Chaque exception est un dict :
+#   {"date": "2026-12-25", "type": "annulation"}
+#   {"date": "2026-05-01", "type": "report", "nouvelle_date": "2026-05-02"}
+#   {"date": "2026-04-02", "type": "report", "nouvelle_date": "2026-04-03",
+#    "couleur": "Jaune"}   # couleur optionnelle pour forcer la poubelle ce jour-là
+EXC_TYPE_ANNULATION = "annulation"
+EXC_TYPE_REPORT = "report"
