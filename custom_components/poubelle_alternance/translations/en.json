@@ -14,7 +14,8 @@
           "jour_collecte": "Collection day",
           "jour_sortie": "Day to put the bin out",
           "heure_sortie": "Hour from which to put the bin out (0-23)",
-          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])"
+          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])",
+          "date_reference": "Reference date (YYYY-MM-DD) — Yellow week on that day; leave empty to use ISO parity"
         }
       }
     }
@@ -34,7 +35,8 @@
           "jour_collecte": "Collection day",
           "jour_sortie": "Day to put the bin out",
           "heure_sortie": "Hour from which to put the bin out (0-23)",
-          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])"
+          "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])",
+          "date_reference": "Reference date (YYYY-MM-DD) — Yellow week on that day; leave empty to use ISO parity"
         }
       }
     }

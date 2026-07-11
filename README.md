@@ -29,7 +29,8 @@ Installation via HACS, configuration par l'interface (config flow), aucune modif
 | Libellé semaine impaire | État en semaine impaire | Noire |
 | Icône semaine paire | Icône MDI | mdi:recycle |
 | Icône semaine impaire | Icône MDI | mdi:trash-can |
-| Jaune sur semaines paires | Inverse l'alternance si décoché | activé |
+| Jaune sur semaines paires | Alternance ISO si aucune date de référence | activé |
+| Date de référence | Jour « Jaune » servant de point de départ (AAAA-MM-JJ) ; prioritaire sur la parité ISO | 2026-06-03 |
 | Jour de ramassage | Jour de collecte | Jeudi |
 | Jour de sortie du bac | Jour où sortir le bac | Mercredi |
 | Heure de sortie | Heure ≥ à partir de laquelle « à sortir ce soir » | 18 |
@@ -76,7 +77,7 @@ action:
 
 ## Note sur le calcul
 
-L'alternance repose sur la parité du numéro de semaine **ISO 8601**. En fin d'année, le passage de la semaine 52/53 à la semaine 1 peut produire deux semaines de même parité consécutives ; utilise un report/annulation ponctuel si besoin.
+Par défaut, l'alternance est calculée depuis une **date de référence** (le jour où la poubelle Jaune est de sortie) : le nombre de semaines écoulées depuis cette date détermine la couleur. Cette méthode est insensible au changement d'année, contrairement à la parité du numéro de semaine ISO. Si tu vides le champ « Date de référence », l'intégration retombe sur la parité ISO (réglable via la case « Jaune sur semaines paires »).
 
 ## Licence
 

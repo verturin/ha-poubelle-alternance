@@ -13,6 +13,7 @@ CONF_JOUR_SORTIE = "jour_sortie"
 CONF_JOUR_COLLECTE = "jour_collecte"
 CONF_HEURE_SORTIE = "heure_sortie"
 CONF_EXCEPTIONS = "exceptions"
+CONF_DATE_REFERENCE = "date_reference"
 
 # Valeurs par défaut
 DEFAULT_NAME = "Poubelle de la semaine"
@@ -21,6 +22,12 @@ DEFAULT_LABEL_IMPAIRE = "Noire"
 DEFAULT_ICON_PAIRE = "mdi:recycle"
 DEFAULT_ICON_IMPAIRE = "mdi:trash-can"
 DEFAULT_JAUNE_SUR_PAIRE = True
+
+# Date de référence : un jour de la semaine où la poubelle "paire" (Jaune) est
+# de sortie. L'alternance est ensuite comptée en nombre de semaines depuis
+# cette date (méthode infaillible, insensible au changement d'année ISO).
+# 2026-06-03 (mercredi) = semaine Jaune, comme l'ancien template YAML.
+DEFAULT_DATE_REFERENCE = "2026-06-03"
 
 # Rythme de collecte : sortie le mercredi soir, ramassage le jeudi matin.
 # Indices ISO : lundi=1 … dimanche=7

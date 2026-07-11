@@ -11,6 +11,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from .collecte import couleur_de_la_semaine, prochaine_collecte
 from .const import (
+    CONF_DATE_REFERENCE,
     CONF_EXCEPTIONS,
     CONF_HEURE_SORTIE,
     CONF_ICON_IMPAIRE,
@@ -21,6 +22,7 @@ from .const import (
     CONF_LABEL_IMPAIRE,
     CONF_LABEL_PAIRE,
     CONF_NAME,
+    DEFAULT_DATE_REFERENCE,
     DEFAULT_HEURE_SORTIE,
     DEFAULT_ICON_IMPAIRE,
     DEFAULT_ICON_PAIRE,
@@ -92,6 +94,7 @@ class PoubelleSemaineSensor(_BasePoubelle):
             self._conf(CONF_LABEL_PAIRE, DEFAULT_LABEL_PAIRE),
             self._conf(CONF_LABEL_IMPAIRE, DEFAULT_LABEL_IMPAIRE),
             self._conf(CONF_JAUNE_SUR_PAIRE, DEFAULT_JAUNE_SUR_PAIRE),
+            self._conf(CONF_DATE_REFERENCE, DEFAULT_DATE_REFERENCE),
         )
 
     @property
@@ -144,6 +147,9 @@ class ProchaineCollecteSensor(_BasePoubelle):
                 CONF_JAUNE_SUR_PAIRE, DEFAULT_JAUNE_SUR_PAIRE
             ),
             exceptions=self._conf(CONF_EXCEPTIONS, []),
+            date_reference=self._conf(
+                CONF_DATE_REFERENCE, DEFAULT_DATE_REFERENCE
+            ),
         )
 
     @property

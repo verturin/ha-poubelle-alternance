@@ -14,7 +14,8 @@
           "jour_collecte": "Jour de ramassage",
           "jour_sortie": "Jour de sortie du bac",
           "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
-          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])"
+          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])",
+          "date_reference": "Date de référence (AAAA-MM-JJ) — semaine Jaune ce jour-là ; laisser vide pour utiliser la parité ISO"
         }
       }
     }
@@ -34,7 +35,8 @@
           "jour_collecte": "Jour de ramassage",
           "jour_sortie": "Jour de sortie du bac",
           "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
-          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])"
+          "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])",
+          "date_reference": "Date de référence (AAAA-MM-JJ) — semaine Jaune ce jour-là ; laisser vide pour utiliser la parité ISO"
         }
       }
     }

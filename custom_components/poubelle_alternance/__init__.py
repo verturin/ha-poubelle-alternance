@@ -6,11 +6,13 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .const import (
+    CONF_DATE_REFERENCE,
     CONF_EXCEPTIONS,
     CONF_HEURE_SORTIE,
     CONF_JOUR_COLLECTE,
     CONF_JOUR_SORTIE,
     CONF_LABEL_IMPAIRE,
+    DEFAULT_DATE_REFERENCE,
     DEFAULT_HEURE_SORTIE,
     DEFAULT_JOUR_COLLECTE,
     DEFAULT_JOUR_SORTIE,
@@ -48,6 +50,7 @@ async def async_migrate_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         data.setdefault(CONF_JOUR_SORTIE, DEFAULT_JOUR_SORTIE)
         data.setdefault(CONF_HEURE_SORTIE, DEFAULT_HEURE_SORTIE)
         data.setdefault(CONF_EXCEPTIONS, [])
+        data.setdefault(CONF_DATE_REFERENCE, DEFAULT_DATE_REFERENCE)
 
         hass.config_entries.async_update_entry(entry, data=data, version=2)
 

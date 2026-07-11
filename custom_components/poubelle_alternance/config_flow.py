@@ -15,6 +15,7 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 
 from .const import (
+    CONF_DATE_REFERENCE,
     CONF_EXCEPTIONS,
     CONF_HEURE_SORTIE,
     CONF_ICON_IMPAIRE,
@@ -25,6 +26,7 @@ from .const import (
     CONF_LABEL_IMPAIRE,
     CONF_LABEL_PAIRE,
     CONF_NAME,
+    DEFAULT_DATE_REFERENCE,
     DEFAULT_HEURE_SORTIE,
     DEFAULT_ICON_IMPAIRE,
     DEFAULT_ICON_PAIRE,
@@ -139,6 +141,12 @@ def _schema(defaults: dict[str, Any]) -> vol.Schema:
                     CONF_JAUNE_SUR_PAIRE, DEFAULT_JAUNE_SUR_PAIRE
                 ),
             ): bool,
+            vol.Optional(
+                CONF_DATE_REFERENCE,
+                default=defaults.get(
+                    CONF_DATE_REFERENCE, DEFAULT_DATE_REFERENCE
+                ),
+            ): str,
             vol.Required(
                 CONF_JOUR_COLLECTE,
                 default=defaults.get(CONF_JOUR_COLLECTE, DEFAULT_JOUR_COLLECTE),
@@ -160,9 +168,20 @@ def _schema(defaults: dict[str, Any]) -> vol.Schema:
 
 
 def _normalise(user_input: dict[str, Any]) -> dict[str, Any]:
-    """Transforme le texte des exceptions en liste structurée."""
+    """Transforme le texte des exceptions en liste structurée et valide la date."""
     data = dict(user_input)
     data[CONF_EXCEPTIONS] = texte_vers_exceptions(data.get(CONF_EXCEPTIONS, ""))
+
+    # Date de référence : on ne garde que si elle est valide (sinon repli ISO).
+    ref = (data.get(CONF_DATE_REFERENCE) or "").strip()
+    if ref:
+        try:
+            date.fromisoformat(ref)
+            data[CONF_DATE_REFERENCE] = ref
+        except ValueError:
+            data[CONF_DATE_REFERENCE] = ""
+    else:
+        data[CONF_DATE_REFERENCE] = ""
     return data
 
 

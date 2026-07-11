@@ -16,14 +16,33 @@ def couleur_de_la_semaine(
     label_paire: str,
     label_impaire: str,
     jaune_sur_paire: bool,
+    date_reference: str | date | None = None,
 ) -> str:
     """Retourne le libellé de la poubelle pour la semaine contenant `jour`.
 
-    Basé sur la parité du numéro de semaine ISO.
+    - Si `date_reference` est fournie : alternance comptée en nombre de semaines
+      écoulées depuis cette date (méthode infaillible, insensible au changement
+      d'année ISO). À la date de référence, c'est la poubelle "paire" (label_paire).
+    - Sinon : repli sur la parité du numéro de semaine ISO.
     """
+    if date_reference:
+        ref = date_reference
+        if isinstance(ref, str):
+            try:
+                ref = date.fromisoformat(ref)
+            except ValueError:
+                ref = None
+        if isinstance(ref, date):
+            # Reproduit la logique du template : (jour - ref).days // 7.
+            # // en Python arrondit vers le bas, y compris pour les dates
+            # antérieures à la référence, ce qui garde une alternance correcte.
+            semaines = (jour - ref).days // 7
+            return label_paire if semaines % 2 == 0 else label_impaire
+
+    # Repli : parité du numéro de semaine ISO.
     semaine = jour.isocalendar()[1]
     est_paire = semaine % 2 == 0
-    # `jaune_sur_paire` True  -> la poubelle "paire" (label_paire) tombe les semaines paires
+    # `jaune_sur_paire` True -> la poubelle "paire" (label_paire) tombe les semaines paires
     if est_paire == jaune_sur_paire:
         return label_paire
     return label_impaire
@@ -70,6 +89,7 @@ def prochaine_collecte(
     jaune_sur_paire: bool,
     exceptions: list | None = None,
     horizon_jours: int = 60,
+    date_reference: str | date | None = None,
 ) -> Collecte | None:
     """Calcule la prochaine collecte à partir de `maintenant`.
 
@@ -93,7 +113,7 @@ def prochaine_collecte(
     for jour in dates_theoriques:
         exc = exc_index.get(jour.isoformat())
         couleur_defaut = couleur_de_la_semaine(
-            jour, label_paire, label_impaire, jaune_sur_paire
+            jour, label_paire, label_impaire, jaune_sur_paire, date_reference
         )
         if exc is None:
             collectes.append(Collecte(date_collecte=jour, couleur=couleur_defaut))
