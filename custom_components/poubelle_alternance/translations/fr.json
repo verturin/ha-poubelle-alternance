@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Poubelle Alternance",
+        "description": "Configure le capteur d'alternance des poubelles (une semaine sur deux, basé sur la parité du numéro de semaine ISO).",
+        "data": {
+          "name": "Nom du capteur",
+          "label_paire": "Libellé semaine paire (ex : Jaune)",
+          "label_impaire": "Libellé semaine impaire (ex : Grise)",
+          "icon_paire": "Icône semaine paire (ex : mdi:recycle)",
+          "icon_impaire": "Icône semaine impaire (ex : mdi:trash-can)",
+          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Modifier Poubelle Alternance",
+        "description": "Modifie les paramètres du capteur.",
+        "data": {
+          "name": "Nom du capteur",
+          "label_paire": "Libellé semaine paire (ex : Jaune)",
+          "label_impaire": "Libellé semaine impaire (ex : Grise)",
+          "icon_paire": "Icône semaine paire (ex : mdi:recycle)",
+          "icon_impaire": "Icône semaine impaire (ex : mdi:trash-can)",
+          "jaune_sur_paire": "La poubelle jaune tombe sur les semaines paires"
+        }
+      }
+    }
+  }
+}

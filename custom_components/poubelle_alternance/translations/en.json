@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Bin Alternation",
+        "description": "Configure the alternating bin sensor (every other week, based on ISO week number parity).",
+        "data": {
+          "name": "Sensor name",
+          "label_paire": "Even-week label (e.g. Yellow)",
+          "label_impaire": "Odd-week label (e.g. Grey)",
+          "icon_paire": "Even-week icon (e.g. mdi:recycle)",
+          "icon_impaire": "Odd-week icon (e.g. mdi:trash-can)",
+          "jaune_sur_paire": "The yellow bin falls on even weeks"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edit Bin Alternation",
+        "description": "Edit the sensor settings.",
+        "data": {
+          "name": "Sensor name",
+          "label_paire": "Even-week label (e.g. Yellow)",
+          "label_impaire": "Odd-week label (e.g. Grey)",
+          "icon_paire": "Even-week icon (e.g. mdi:recycle)",
+          "icon_impaire": "Odd-week icon (e.g. mdi:trash-can)",
+          "jaune_sur_paire": "The yellow bin falls on even weeks"
+        }
+      }
+    }
+  }
+}
