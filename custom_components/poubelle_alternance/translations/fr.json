@@ -15,7 +15,10 @@
           "jour_sortie": "Jour de sortie du bac",
           "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
           "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])",
-          "date_reference": "Date de référence (AAAA-MM-JJ) — semaine Jaune ce jour-là ; laisser vide pour utiliser la parité ISO"
+          "date_reference": "Date d'un jeudi de collecte JAUNE (AAAA-MM-JJ)"
+        },
+        "data_description": {
+          "date_reference": "Sert de repère pour l'alternance. Pour recaler jaune/noire, indiquez la date d'un jeudi où la poubelle jaune est ramassée. Laissez vide pour utiliser la parité du numéro de semaine ISO."
         }
       }
     }
@@ -36,7 +39,10 @@
           "jour_sortie": "Jour de sortie du bac",
           "heure_sortie": "Heure à partir de laquelle sortir le bac (0-23)",
           "exceptions": "Jours spéciaux (une par ligne : AAAA-MM-JJ annulation | AAAA-MM-JJ report AAAA-MM-JJ [Couleur])",
-          "date_reference": "Date de référence (AAAA-MM-JJ) — semaine Jaune ce jour-là ; laisser vide pour utiliser la parité ISO"
+          "date_reference": "Date d'un jeudi de collecte JAUNE (AAAA-MM-JJ)"
+        },
+        "data_description": {
+          "date_reference": "Sert de repère pour l'alternance. Pour recaler jaune/noire, indiquez la date d'un jeudi où la poubelle jaune est ramassée. Laissez vide pour utiliser la parité du numéro de semaine ISO."
         }
       }
     }

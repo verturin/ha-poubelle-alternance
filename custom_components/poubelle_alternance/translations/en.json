@@ -15,7 +15,10 @@
           "jour_sortie": "Day to put the bin out",
           "heure_sortie": "Hour from which to put the bin out (0-23)",
           "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])",
-          "date_reference": "Reference date (YYYY-MM-DD) — Yellow week on that day; leave empty to use ISO parity"
+          "date_reference": "Date of a YELLOW collection Thursday (YYYY-MM-DD)"
+        },
+        "data_description": {
+          "date_reference": "Used as the anchor for the alternation. To re-sync yellow/black, enter the date of a Thursday when the yellow bin is collected. Leave empty to use ISO week-number parity."
         }
       }
     }
@@ -36,7 +39,10 @@
           "jour_sortie": "Day to put the bin out",
           "heure_sortie": "Hour from which to put the bin out (0-23)",
           "exceptions": "Special days (one per line: YYYY-MM-DD annulation | YYYY-MM-DD report YYYY-MM-DD [Colour])",
-          "date_reference": "Reference date (YYYY-MM-DD) — Yellow week on that day; leave empty to use ISO parity"
+          "date_reference": "Date of a YELLOW collection Thursday (YYYY-MM-DD)"
+        },
+        "data_description": {
+          "date_reference": "Used as the anchor for the alternation. To re-sync yellow/black, enter the date of a Thursday when the yellow bin is collected. Leave empty to use ISO week-number parity."
         }
       }
     }

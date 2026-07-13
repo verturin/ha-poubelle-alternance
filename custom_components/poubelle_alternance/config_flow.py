@@ -13,6 +13,7 @@ from homeassistant.config_entries import (
 )
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers import selector
 
 from .const import (
     CONF_DATE_REFERENCE,
@@ -41,15 +42,15 @@ from .const import (
     EXC_TYPE_REPORT,
 )
 
-JOURS = {
-    1: "Lundi",
-    2: "Mardi",
-    3: "Mercredi",
-    4: "Jeudi",
-    5: "Vendredi",
-    6: "Samedi",
-    7: "Dimanche",
-}
+JOURS_OPTIONS = [
+    {"value": "1", "label": "Lundi"},
+    {"value": "2", "label": "Mardi"},
+    {"value": "3", "label": "Mercredi"},
+    {"value": "4", "label": "Jeudi"},
+    {"value": "5", "label": "Vendredi"},
+    {"value": "6", "label": "Samedi"},
+    {"value": "7", "label": "Dimanche"},
+]
 
 
 def exceptions_vers_texte(exceptions: list | None) -> str:
@@ -118,61 +119,100 @@ def _schema(defaults: dict[str, Any]) -> vol.Schema:
         {
             vol.Required(
                 CONF_NAME, default=defaults.get(CONF_NAME, DEFAULT_NAME)
-            ): str,
+            ): selector.TextSelector(),
             vol.Required(
                 CONF_LABEL_PAIRE,
                 default=defaults.get(CONF_LABEL_PAIRE, DEFAULT_LABEL_PAIRE),
-            ): str,
+            ): selector.TextSelector(),
             vol.Required(
                 CONF_LABEL_IMPAIRE,
                 default=defaults.get(CONF_LABEL_IMPAIRE, DEFAULT_LABEL_IMPAIRE),
-            ): str,
+            ): selector.TextSelector(),
             vol.Required(
                 CONF_ICON_PAIRE,
                 default=defaults.get(CONF_ICON_PAIRE, DEFAULT_ICON_PAIRE),
-            ): str,
+            ): selector.IconSelector(),
             vol.Required(
                 CONF_ICON_IMPAIRE,
                 default=defaults.get(CONF_ICON_IMPAIRE, DEFAULT_ICON_IMPAIRE),
-            ): str,
+            ): selector.IconSelector(),
             vol.Required(
                 CONF_JAUNE_SUR_PAIRE,
                 default=defaults.get(
                     CONF_JAUNE_SUR_PAIRE, DEFAULT_JAUNE_SUR_PAIRE
                 ),
-            ): bool,
+            ): selector.BooleanSelector(),
             vol.Optional(
                 CONF_DATE_REFERENCE,
                 default=defaults.get(
                     CONF_DATE_REFERENCE, DEFAULT_DATE_REFERENCE
                 ),
-            ): str,
+            ): selector.TextSelector(),
             vol.Required(
                 CONF_JOUR_COLLECTE,
-                default=defaults.get(CONF_JOUR_COLLECTE, DEFAULT_JOUR_COLLECTE),
-            ): vol.In(JOURS),
+                default=str(
+                    defaults.get(CONF_JOUR_COLLECTE, DEFAULT_JOUR_COLLECTE)
+                ),
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=JOURS_OPTIONS,
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            ),
             vol.Required(
                 CONF_JOUR_SORTIE,
-                default=defaults.get(CONF_JOUR_SORTIE, DEFAULT_JOUR_SORTIE),
-            ): vol.In(JOURS),
+                default=str(
+                    defaults.get(CONF_JOUR_SORTIE, DEFAULT_JOUR_SORTIE)
+                ),
+            ): selector.SelectSelector(
+                selector.SelectSelectorConfig(
+                    options=JOURS_OPTIONS,
+                    mode=selector.SelectSelectorMode.DROPDOWN,
+                )
+            ),
             vol.Required(
                 CONF_HEURE_SORTIE,
-                default=defaults.get(CONF_HEURE_SORTIE, DEFAULT_HEURE_SORTIE),
-            ): vol.All(int, vol.Range(min=0, max=23)),
+                default=int(
+                    defaults.get(CONF_HEURE_SORTIE, DEFAULT_HEURE_SORTIE)
+                ),
+            ): selector.NumberSelector(
+                selector.NumberSelectorConfig(
+                    min=0, max=23, step=1, mode=selector.NumberSelectorMode.BOX
+                )
+            ),
             vol.Optional(
                 CONF_EXCEPTIONS,
                 default=exceptions_vers_texte(defaults.get(CONF_EXCEPTIONS)),
-            ): str,
+            ): selector.TextSelector(
+                selector.TextSelectorConfig(multiline=True)
+            ),
         }
     )
 
 
 def _normalise(user_input: dict[str, Any]) -> dict[str, Any]:
-    """Transforme le texte des exceptions en liste structurée et valide la date."""
+    """Convertit les types du formulaire et valide les entrées.
+
+    - jours de collecte/sortie : chaîne "1".."7" -> entier
+    - heure de sortie : float du NumberSelector -> entier
+    - exceptions : texte multi-lignes -> liste structurée
+    - date de référence : conservée seulement si valide (sinon repli ISO)
+    """
     data = dict(user_input)
+
+    for cle in (CONF_JOUR_COLLECTE, CONF_JOUR_SORTIE):
+        try:
+            data[cle] = int(data.get(cle))
+        except (TypeError, ValueError):
+            pass
+
+    try:
+        data[CONF_HEURE_SORTIE] = int(float(data.get(CONF_HEURE_SORTIE)))
+    except (TypeError, ValueError):
+        data[CONF_HEURE_SORTIE] = DEFAULT_HEURE_SORTIE
+
     data[CONF_EXCEPTIONS] = texte_vers_exceptions(data.get(CONF_EXCEPTIONS, ""))
 
-    # Date de référence : on ne garde que si elle est valide (sinon repli ISO).
     ref = (data.get(CONF_DATE_REFERENCE) or "").strip()
     if ref:
         try:
@@ -207,14 +247,11 @@ class PoubelleAlternanceConfigFlow(ConfigFlow, domain=DOMAIN):
         config_entry: ConfigEntry,
     ) -> OptionsFlow:
         """Retourne le flux d'options."""
-        return PoubelleAlternanceOptionsFlow(config_entry)
+        return PoubelleAlternanceOptionsFlow()
 
 
 class PoubelleAlternanceOptionsFlow(OptionsFlow):
     """Gère la modification des options après installation."""
-
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        self.config_entry = config_entry
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -223,5 +260,6 @@ class PoubelleAlternanceOptionsFlow(OptionsFlow):
         if user_input is not None:
             return self.async_create_entry(title="", data=_normalise(user_input))
 
+        # `self.config_entry` est fourni automatiquement par OptionsFlow.
         current = {**self.config_entry.data, **self.config_entry.options}
         return self.async_show_form(step_id="init", data_schema=_schema(current))
