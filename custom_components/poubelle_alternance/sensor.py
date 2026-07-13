@@ -89,8 +89,17 @@ class PoubelleSemaineSensor(_BasePoubelle):
         return self._nom_base
 
     def _couleur(self) -> str:
+        # On aligne la couleur sur la COLLECTE de la semaine en cours (même
+        # jour de ramassage que le capteur "prochaine collecte"), et non sur
+        # le jour courant : sinon lundi et jeudi peuvent tomber dans des
+        # semaines de parité différente selon la date de référence.
+        now = dt_util.now()
+        jour_collecte = int(self._conf(CONF_JOUR_COLLECTE, DEFAULT_JOUR_COLLECTE))
+        # jour de collecte de la semaine ISO courante (lundi = 1)
+        lundi = now.date() - timedelta(days=now.date().isoweekday() - 1)
+        jour_ramassage = lundi + timedelta(days=jour_collecte - 1)
         return couleur_de_la_semaine(
-            dt_util.now().date(),
+            jour_ramassage,
             self._conf(CONF_LABEL_PAIRE, DEFAULT_LABEL_PAIRE),
             self._conf(CONF_LABEL_IMPAIRE, DEFAULT_LABEL_IMPAIRE),
             self._conf(CONF_JAUNE_SUR_PAIRE, DEFAULT_JAUNE_SUR_PAIRE),
@@ -157,7 +166,9 @@ class ProchaineCollecteSensor(_BasePoubelle):
         _, collecte = self._calcul()
         if collecte is None:
             return None
-        return collecte.date_collecte.isoformat()
+        # device_class "date" attend un objet date, pas une chaîne ISO,
+        # sinon Home Assistant marque l'entité "indisponible".
+        return collecte.date_collecte
 
     @property
     def icon(self) -> str:
