@@ -79,6 +79,16 @@ action:
 
 Par défaut, l'alternance est calculée depuis une **date de référence** (le jour où la poubelle Jaune est de sortie) : le nombre de semaines écoulées depuis cette date détermine la couleur. Cette méthode est insensible au changement d'année, contrairement à la parité du numéro de semaine ISO. Si tu vides le champ « Date de référence », l'intégration retombe sur la parité ISO (réglable via la case « Jaune sur semaines paires »).
 
+## Carte Lovelace avec images officielles
+
+Le dossier [`dashboard/carte_poubelle_images.yaml`](dashboard/carte_poubelle_images.yaml) fournit une carte prête à l'emploi qui affiche le pictogramme officiel Paris Est Marne & Bois de la poubelle de la semaine (Jaune/Noire), la date de prochaine collecte, et un encadré d'alerte quand il faut sortir le bac le soir même.
+
+**Installation :**
+1. Copiez le dossier `www/poubelle_alternance/` de ce dépôt vers `<config>/www/poubelle_alternance/` sur votre serveur Home Assistant (HACS ne déploie que le code Python, jamais le dossier `www`).
+2. Redémarrez Home Assistant (nécessaire pour que le dossier `www` soit servi sous `/local/...`).
+3. Sur votre dashboard : **Modifier le tableau de bord → Ajouter une carte → Manuel**, puis collez le contenu de `carte_poubelle_images.yaml`.
+4. L'encadré d'alerte utilise `card-mod` (installable via HACS, catégorie Frontend) ; sans lui, la carte fonctionne quand même, juste sans le style personnalisé.
+
 ## Licence
 
 MIT

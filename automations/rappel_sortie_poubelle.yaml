@@ -1,0 +1,44 @@
+# Automation — Rappel de sortie de poubelle, fiable à l'heure
+#
+# Combine deux déclencheurs pour garantir la notification :
+#   1. Un déclencheur horaire à 18h05 (5 min après l'heure de sortie
+#      configurée par défaut, pour laisser au capteur le temps de se
+#      rafraîchir - voir SCAN_INTERVAL dans sensor.py).
+#   2. Un déclencheur sur changement d'état de a_sortir_ce_soir, en
+#      filet de sécurité si le capteur bascule après 18h05.
+#
+# Installation :
+#   Paramètres → Automatisations et scènes → Automatisations
+#   → Ajouter une automatisation → Modifier en YAML
+#   → coller le contenu ci-dessous → Enregistrer
+#
+# Astuce : si tu changes l'heure de sortie dans la config de l'intégration
+# (Poubelle Alternance → Configurer), décale aussi le "at:" ci-dessous de
+# quelques minutes après cette heure.
+
+alias: Rappel sortie poubelle
+description: >-
+  Notifie s'il faut sortir la poubelle ce soir, avec la couleur du bac
+  et la date du ramassage du lendemain. Déclenchement à heure fixe avec
+  un filet de sécurité sur le changement d'état du capteur.
+triggers:
+  - trigger: time
+    at: "18:05:00"
+    id: horaire
+  - trigger: state
+    entity_id: sensor.poubelle_de_la_semaine_prochaine_collecte
+    attribute: a_sortir_ce_soir
+    to: true
+    id: changement_etat
+conditions:
+  - condition: template
+    value_template: >-
+      {{ state_attr('sensor.poubelle_de_la_semaine_prochaine_collecte', 'a_sortir_ce_soir') == true }}
+actions:
+  - action: notify.notify
+    data:
+      title: "🗑️ Sortir la poubelle"
+      message: >-
+        Ce soir : poubelle {{ state_attr('sensor.poubelle_de_la_semaine_prochaine_collecte', 'couleur') }}
+        (ramassage {{ states('sensor.poubelle_de_la_semaine_prochaine_collecte') }}).
+mode: single

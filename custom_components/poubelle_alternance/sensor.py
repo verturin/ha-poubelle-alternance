@@ -35,9 +35,12 @@ from .const import (
     DOMAIN,
 )
 
-# Recalcul chaque heure : l'état ne change qu'au changement de jour/semaine,
-# mais on rafraîchit régulièrement pour couvrir le passage à minuit et le soir.
-SCAN_INTERVAL = timedelta(hours=1)
+# Recalcul toutes les 5 minutes : l'état ne change qu'au changement de
+# jour/semaine, mais un intervalle court est nécessaire pour que l'attribut
+# a_sortir_ce_soir bascule à l'heure configurée sans décalage important
+# (avec 1h d'intervalle, le passage à true pouvait accuser jusqu'à 59 min
+# de retard par rapport à l'heure réglée).
+SCAN_INTERVAL = timedelta(minutes=5)
 
 
 async def async_setup_entry(

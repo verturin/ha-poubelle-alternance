@@ -1,0 +1,54 @@
+# Carte Lovelace — Poubelle Alternance (images officielles Paris Est Marne & Bois)
+#
+# Prérequis : copier www/poubelle_alternance/ vers <config>/www/poubelle_alternance/
+# sur le serveur Home Assistant (voir README / tutoriel).
+#
+# À coller telle quelle dans une carte "Manuel" (YAML) de votre dashboard.
+
+type: vertical-stack
+cards:
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: sensor.poubelle_de_la_semaine
+        state: "Jaune"
+    card:
+      type: picture-entity
+      entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+      image: /local/poubelle_alternance/poubelle_jaune.png
+      name: Poubelle Jaune
+      show_state: false
+      tap_action:
+        action: more-info
+
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: sensor.poubelle_de_la_semaine
+        state: "Noire"
+    card:
+      type: picture-entity
+      entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+      image: /local/poubelle_alternance/poubelle_noire.png
+      name: Poubelle Noire
+      show_state: false
+      tap_action:
+        action: more-info
+
+  - type: entities
+    title: Détails collecte
+    entities:
+      - entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+        name: Prochaine collecte
+      - type: attribute
+        entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+        attribute: couleur
+        name: Couleur
+      - type: attribute
+        entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+        attribute: jours_restants
+        name: Jours restants
+      - type: attribute
+        entity: sensor.poubelle_de_la_semaine_prochaine_collecte
+        attribute: a_sortir_ce_soir
+        name: À sortir ce soir
